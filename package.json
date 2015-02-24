@@ -1,0 +1,29 @@
+{
+  "name": "json-2-csv-2-xlsx",
+  "version": "1.0.0",
+  "description": "Converts CouchDB JSON to Excel, using csv as an intermediary.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chrisekelley/json-2-csv-2-xlsx"
+  },
+  "keywords": [
+    "JSON",
+    "CSV",
+    "Excel",
+    "CouchDB"
+  ],
+  "author": "Chris E. Kelley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chrisekelley/json-2-csv-2-xlsx/issues"
+  },
+  "homepage": "https://github.com/chrisekelley/json-2-csv-2-xlsx",
+  "dependencies": {
+    "json-2-csv": "^1.0.8",
+    "xlsx": "^0.7.12"
+  }
+}
