@@ -25,5 +25,3 @@ To process the files, enter
     node index.js
 
 The output file is named report.xlsx.
-
-
