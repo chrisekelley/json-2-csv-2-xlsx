@@ -2,13 +2,6 @@ var converter = require('json-2-csv');
 var fs = require('fs');
 var XLSX = require('xlsx');
 
-//fs.readFile("file.json", function(err, data) {
-//  if (err) throw err;
-//  console.log(data);
-//  var obj = JSON.parse(data);
-//  converter.json2csv(obj, json2csvCallback);
-//});
-
 var ws_name = "SheetJS";
 
 function Workbook() {
@@ -27,22 +20,17 @@ function datenum(v, date1904) {
   return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
 }
 
-//var data = [[1,2,3],[true, false, null, "sheetjs"],["foo","bar",new Date("2014-02-19T14:30Z"), "0.3"], ["baz", null, "qux"]]
-
 function create_array_of_arrays(data) {
   var doc = [];
   var arr = data.split('\n');
-  console.log("arr.length: "+ arr.length);
   for(var i = 0; i != arr.length; ++i) {
     lineArr = arr[i].split(",")
     doc[i] = lineArr;
-    //console.log("doc " + i + ": "  + JSON.stringify(doc[i]));
   }
+  //Delete the last empty array
   if (doc[arr.length-1] == "") {
     var deleted = doc.splice((arr.length-1), 1);
-    //console.log("Deleting last one from " + (arr.length-1) + ": " + JSON.stringify(deleted));
   }
-  console.log("doc: " + JSON.stringify(doc))
   return doc;
 }
 
@@ -73,8 +61,6 @@ function sheet_from_array_of_arrays(data, opts) {
   if(range.s.c < 10000000) ws['!ref'] = XLSX.utils.encode_range(range);
   return ws;
 }
-//var indivReg = null;
-//var trichiasis = null;
 
 var json2csvCallback = function (err, data) {
   if (err) throw err;
@@ -83,7 +69,6 @@ var json2csvCallback = function (err, data) {
   //  if(err) {
   //    console.log(err);
   //  } else {
-      console.log("The file was saved!");
       ws_name = 'A';
       if (filename == 'B.csv') {
         ws_name = 'B';
@@ -91,7 +76,6 @@ var json2csvCallback = function (err, data) {
       console.log("Creating worksheet: " + ws_name);
       /* add worksheet to workbook */
       wb.SheetNames.push(ws_name);
-      //console.log("data: " + data);
       var arr = create_array_of_arrays(data)
       var ws = sheet_from_array_of_arrays(arr);
       wb.Sheets[ws_name] = ws;
@@ -110,12 +94,4 @@ converter.json2csv(obj, json2csvCallback);
 filename = 'B.csv';
 var obj = JSON.parse(fs.readFileSync('B.json', 'utf8'));
 converter.json2csv(obj, json2csvCallback);
-
-//var data = [[1,2,3],[true, false, null, "sheetjs"],["foo","bar",new Date("2014-02-19T14:30Z"), "0.3"], ["baz", null, "qux"]]
-//ws_name = 'trichiasis';
-///* add worksheet to workbook */
-//wb.SheetNames.push(ws_name);
-//ws = sheet_from_array_of_arrays(data);
-//wb.Sheets[ws_name] = ws;
-//XLSX.writeFile(wb, 'kiwiTraining.xlsx');
 
